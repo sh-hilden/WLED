@@ -37,8 +37,9 @@ Timezone* tz;
 #define TZ_MX_CENTRAL          21
 #define TZ_PAKISTAN            22
 #define TZ_BRASILIA            23
+#define TZ_AUSTRALIA_WESTERN   24
 
-#define TZ_COUNT               24
+#define TZ_COUNT               25
 #define TZ_INIT               255
 
 byte tzCurrent = TZ_INIT; //uninitialized
@@ -140,6 +141,10 @@ static const std::pair<TimeChangeRule, TimeChangeRule> TZ_TABLE[] PROGMEM = {
     /* TZ_BRASILIA */ {
       {Last, Sun, Mar, 1, -180},    //Brasília Standard Time = UTC - 3 hours
       {Last, Sun, Mar, 1, -180}
+    },
+    /* TZ_AUSTRALIA_WESTERN */ {
+      {Last, Sun, Mar, 1, 480},     //AWST = UTC + 8 hours
+      {Last, Sun, Mar, 1, 480}      //AWST = UTC + 8 hours (no DST)
     }
 };
 
@@ -224,7 +229,7 @@ void sendNTPPacket()
   ntpUdp.endPacket();
 }
 
-static bool isValidNtpResponse(byte * ntpPacket) {
+static bool isValidNtpResponse(const byte* ntpPacket) {
   // Perform a few validity checks on the packet
   //   based on https://github.com/taranais/NTPClient/blob/master/NTPClient.cpp
   if((ntpPacket[0] & 0b11000000) == 0b11000000) return false; //reject LI=UNSYNC
