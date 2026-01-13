@@ -78,6 +78,10 @@
   #include "../usermods/VL53L0X_gestures/usermod_vl53l0x_gestures.h"
 #endif
 
+#ifdef USERMOD_VL53L0X_DISTANCE
+  #include "../usermods/VL53L0X_distance/usermod_vl53l0x_distance.h"
+#endif
+
 #ifdef USERMOD_ANIMATED_STAIRCASE
   #include "../usermods/Animated_Staircase/Animated_Staircase.h"
 #endif
@@ -309,6 +313,10 @@ void registerUsermods()
 
   #ifdef USERMOD_VL53L0X_GESTURES
   UsermodManager::add(new UsermodVL53L0XGestures());
+  #endif
+
+  #ifdef USERMOD_VL53L0X_DISTANCE
+  UsermodManager::add(new UsermodVL53L0XDistance());
   #endif
 
   #ifdef USERMOD_ANIMATED_STAIRCASE
